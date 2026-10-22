@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # CampusConnect (frontend)
 
 Personalized opportunity platform for college students. React 18 + Vite + Tailwind CSS v4, **JavaScript only** (`.js` / `.jsx`).
@@ -76,3 +77,7 @@ and `GET /notifications` (replace the derived list in `src/hooks/useNotification
 - No authentication, accounts or real notifications delivery (no email/push).
 - Applications are tracked manually; there is no drag-and-drop board and no calendar view.
 - Deadlines are generated relative to the current date on every load.
+=======
+# NextOpp
+A platform that helps college students find the right internships, hackathons, scholarships, and competitions.
+>>>>>>> origin/main
