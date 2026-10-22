@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+/* Design tokens. Brand palette maps to Tailwind defaults:
+   sidebar slate-900 (#0f172a), brand blue-600 (#2563eb), success green-500 (#22c55e),
+   warning orange-500 (#f97316), accent purple-500 (#a855f7), body slate-500 (#64748b). */
+@theme {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --shadow-card: 0 1px 2px 0 rgb(15 23 42 / 0.04), 0 1px 3px 0 rgb(15 23 42 / 0.06);
+  --shadow-pop: 0 10px 30px -8px rgb(15 23 42 / 0.25);
+}
+
+html { -webkit-text-size-adjust: 100%; }
+body { @apply bg-slate-50 text-slate-700 antialiased; font-family: var(--font-sans); }
+h1, h2, h3, h4 { @apply text-slate-900; }
+
+/* Visible keyboard focus everywhere. */
+:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; border-radius: 6px; }
+
+/* Skeleton shimmer used by LoadingState. */
+@keyframes shimmer { 100% { transform: translateX(100%); } }
+.skeleton { position: relative; overflow: hidden; @apply rounded-md bg-slate-200/70; }
+.skeleton::after {
+  content: ""; position: absolute; inset: 0; transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.6), transparent);
+  animation: shimmer 1.4s infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .skeleton::after { animation: none; }
+  * { scroll-behavior: auto !important; }
+}
+
+/* Reusable form control primitive. Kept in the components layer so utility classes
+   (pl-10, h-11, bg-slate-100...) on an element can still override these defaults. */
+@layer components {
+  .input {
+    @apply h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 transition-colors hover:border-slate-400 focus:border-blue-600 disabled:cursor-not-allowed disabled:bg-slate-50;
+  }
+  .input[aria-invalid="true"] { @apply border-red-500; }
+  textarea.input { @apply h-auto min-h-24 py-2; }
+}
