@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   NextOpp design tokens
+   - canvas: warm paper, so white cards read as raised surfaces
+   - ink: deep navy for the sidebar and the hero surface
+   - brand: cobalt, the single action color
+   - signal colors (green / amber / red) are reserved for meaning, never decoration
+   --------------------------------------------------------------------------- */
+@theme {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Bricolage Grotesque Variable", "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --color-canvas: #f6f5f1;
+  --color-ink-700: #232c4d;
+  --color-ink-800: #161d38;
+  --color-ink-900: #0e1428;
+  --color-ink-950: #0a0f1f;
+
+  --color-brand-50: #eef1ff;
+  --color-brand-100: #dfe5ff;
+  --color-brand-200: #c3ccff;
+  --color-brand-500: #4560ff;
+  --color-brand-600: #2d47f0;
+  --color-brand-700: #2338cc;
+  --color-brand-800: #1f2fa3;
+
+  --shadow-card: 0 1px 0 0 rgb(28 25 23 / 0.03), 0 1px 3px 0 rgb(28 25 23 / 0.06);
+  --shadow-pop: 0 14px 40px -10px rgb(10 15 31 / 0.35);
+}
+
+html { -webkit-text-size-adjust: 100%; }
+body { @apply bg-canvas text-stone-700 antialiased; font-family: var(--font-sans); }
+h1, h2, h3, h4 { @apply text-stone-900; font-family: var(--font-display); letter-spacing: -0.015em; }
+.font-display { font-family: var(--font-display); letter-spacing: -0.02em; }
+
+:focus-visible { outline: 2px solid #2d47f0; outline-offset: 2px; border-radius: 6px; }
+
+@keyframes shimmer { 100% { transform: translateX(100%); } }
+.skeleton { position: relative; overflow: hidden; @apply rounded-md bg-stone-200/70; }
+.skeleton::after {
+  content: ""; position: absolute; inset: 0; transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.6), transparent);
+  animation: shimmer 1.4s infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .skeleton::after { animation: none; }
+  * { scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
+}
+
+/* Faint grid used only on the dark hero surface. */
+.hero-grid {
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.045) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: linear-gradient(115deg, transparent 20%, #000 90%);
+}
+
+/* Form control primitive lives in the components layer so utilities (pl-10, h-11, bg-...) can override it. */
+@layer components {
+  .input {
+    @apply h-10 w-full rounded-lg border border-stone-300 bg-white px-3 text-sm text-stone-900 shadow-sm placeholder:text-stone-400 transition-colors hover:border-stone-400 focus:border-brand-600 disabled:cursor-not-allowed disabled:bg-stone-50;
+  }
+  .input[aria-invalid="true"] { @apply border-red-500; }
+  textarea.input { @apply h-auto min-h-24 py-2; }
+}
