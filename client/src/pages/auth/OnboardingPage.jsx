@@ -23,7 +23,7 @@ const WORK_MODES = [
 ];
 
 const LOCATION_MODES = [
-  { id: 'nearby_cities', label: 'My city & nearby / NCR', desc: 'Prioritize Delhi NCR / metro cluster' },
+  { id: 'city_and_nearby', label: 'My city & nearby / NCR', desc: 'Prioritize Delhi NCR / metro cluster' },
   { id: 'only_my_city', label: 'Only my city', desc: 'Strict local preference' },
   { id: 'anywhere_india', label: 'Anywhere in India', desc: 'Open to opportunities across India' },
   { id: 'remote_only', label: 'Remote only', desc: 'Exclusively remote roles' },
@@ -750,7 +750,10 @@ export default function OnboardingPage() {
         minStipend: mattersPrefs.minStipend ? Number(mattersPrefs.minStipend) : undefined,
         exposurePriorities: mattersPrefs.exposurePriorities,
         isBeginner: education.isBeginner,
-        semesterCompleted: education.semesterCompleted,
+        // semesterCompleted: education.semesterCompleted,
+        semesterCompleted: education.semesterCompleted
+  ? Number.parseInt(education.semesterCompleted, 10)
+  : undefined,
         locations: [locationPrefs.city, 'Remote'].filter(Boolean),
         opportunityTypes: ['internship', 'hackathon', 'fellowship', 'competition'],
       };
